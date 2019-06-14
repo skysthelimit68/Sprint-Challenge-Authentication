@@ -14,6 +14,10 @@ class App extends React.Component{
   state = {
     loggedIn: false
   }
+
+  componentDidMount() {
+    if(localStorage.getItem("token")) localStorage.removeItem("token")
+  }
   handleLogout = event => {
     event.preventDefault();
     localStorage.removeItem("token");
@@ -38,7 +42,7 @@ class App extends React.Component{
       <header>
         <NavLink to="/login">Login</NavLink>
         <NavLink to="/register">Register</NavLink>
-        <NavLink to="/jokes">Read Jokes</NavLink>
+        <NavLink to="/jokes">Jokes</NavLink>
         <Button className={btnClass} onClick={this.handleLogout}>Logout</Button>
       </header>
       <Route 

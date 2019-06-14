@@ -10,6 +10,10 @@ class RegisterForm extends React.Component {
         error: ""
     }
 
+    componentDidMount() {
+        if(localStorage.getItem("token")) this.props.history.push("/jokes")
+    }
+
     updateField = event => {
         this.setState({
             [event.target.name] : event.target.value
@@ -50,8 +54,10 @@ class RegisterForm extends React.Component {
             return <h2>You are logged in. Go check out some Dad Jokes!</h2>
         } else {
             return(
-                <div className="formWrapper">
+                <div className="mainWrapper">
                     <h2 className={messageClass}>{message}</h2>
+                    <div className="formWrapper">
+                    
                     <Form>
                         <Input
                             type="text"
@@ -70,6 +76,8 @@ class RegisterForm extends React.Component {
                         <Button onClick={this.handleSubmit}>Register</Button>
                     </Form>
                 </div>
+                </div>
+                
             
         )
         }
