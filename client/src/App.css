@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .App-logo {
@@ -30,4 +33,87 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+header {
+  width:100%;
+  display:flex !important;
+  justify-content: flex-end;
+  height:60px;
+  align-items: center;
+  background:#080808;
+  color:white;
+  padding: 0 50px;
+}
+
+header a, header button {
+  margin: 10px 15px;
+  background-color:#080808 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border:none !important;
+  color:white !important;
+  vertical-align:middle;
+}
+
+header a:hover, button:hover {
+  text-decoration: none;
+  font-weight:900;
+}
+.jokesWrapper {
+  width:100%;
+  max-width:980px;
+  margin:30px auto;
+  display:flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.jokesWrapper .card {
+  width:30%;
+  margin:20px 1.66%;
+
+}
+
+.jokesWrapper .card-body {
+  padding:0;
+}
+
+.jokesWrapper .card .card-title {
+  background: #333333;
+  color: white;
+  font-weight:900;
+  padding:10px 20px;
+}
+
+.jokesWrapper .card-subtitle, .jokesWrapper .card-text {
+  padding: 10px 20px;
+}
+
+.formWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+}
+
+.formWrapper h2 {
+  width:100%;
+  padding:10px 20px;
+  background:salmon;
+  border-radius: 4px;
+  color:white;
+}
+
+form {
+  width:100%;
+  max-width:500px;
+}
+
+form input {
+  margin:20px 0;
+}
+
+.hidden {
+  display:none !important;
 }

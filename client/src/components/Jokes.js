@@ -19,11 +19,13 @@ class Jokes extends React.Component {
         console.log(this.state.jokes)
     }
 
+    
     render() {
         return(
-            <>
+            <div className="jokesWrapper">
+                
                 {this.state.jokes.map(joke => <Joke joke={joke} key={joke.id}/>)}
-            </>
+            </div>
         )
     }
 }

@@ -5,7 +5,9 @@ import axios from 'axios';
 class LoginForm extends React.Component {
     state = {
         username: "",
-        password: ""
+        password: "",
+        status: this.props.loggedIn,
+        error: ""
     }
 
     updateField = event => {
@@ -20,38 +22,60 @@ class LoginForm extends React.Component {
         axios.post('http://localhost:3300/api/login/', creds)
         .then( res => {
             localStorage.setItem("token", res.data.token);
+            this.props.updateStatus(true);
+            
             this.props.history.push('/jokes');
             console.log(res)
             this.setState({
                 username:"",
-                password:""
+                password:"",
+                status:true,
+                error: ""
             })
         })
         .catch( error => {
             console.log(error)
+            this.setState({
+                error: "Please provide valid credential"
+            })
         })
     }
 
+    
+
     render() {
-        return(
-            <Form onSubmit={this.handleSubmit}>
-                 <Input
-                    type="text"
-                    name="username"
-                    placeholder="username"
-                    onChange={this.updateField}
-                    value={this.state.username}
-                 />
-                 <Input
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                    onChange={this.updateField}
-                    value={this.state.password}
-                 />
-                 <Button type="submit">Login</Button>
-            </Form>
-        )
+
+        const message = this.state.error !== "" ? this.state.error :  "";
+        const messageClass = message === "" ? "hidden": "" ;
+
+        if(this.state.status ) {
+            return <h2>You are logged in. Go check out some Dad Jokes!</h2>
+        } else { 
+            return(
+                <div className="formWrapper">
+                    <h2 className={messageClass}>{message}</h2>
+                    <Form>
+                        <Input
+                            type="text"
+                            name="username"
+                            placeholder="username"
+                            onChange={this.updateField}
+                            value={this.state.username}
+                        />
+                        <Input
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                            onChange={this.updateField}
+                            value={this.state.password}
+                        />
+                        <Button onClick={this.handleSubmit}>Login</Button>
+                    </Form>
+                </div>
+            
+            )
+        }
+        
     }
 }
 

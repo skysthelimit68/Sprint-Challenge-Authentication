@@ -5,7 +5,9 @@ import axios from 'axios';
 class RegisterForm extends React.Component {
     state = {
         username: "",
-        password: ""
+        password: "",
+        status: this.props.loggedIn, 
+        error: ""
     }
 
     updateField = event => {
@@ -16,43 +18,62 @@ class RegisterForm extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const creds = this.state;
+        const creds = {username : this.state.username, password: this.state.password};
         console.log(creds)
         axios.post('http://localhost:3300/api/register/', creds)
         .then( res => {
             console.log(res)
             localStorage.setItem("token", res.data.token);
+            this.props.updateStatus(true);
+
             this.props.history.push('/jokes');
             this.setState({
                 username:"",
-                password:""
+                password:"",
+                status: true,
+                error: ""
             })
         })
         .catch( error => {
             console.log("handleSubmit error: ", error.message)
+            this.setState({
+                error: "Please provide valid credential"
+            })
         })
     }
 
     render() {
-        return(
-            <Form>
-                 <Input
-                    type="text"
-                    name="username"
-                    placeholder="username"
-                    onChange={this.updateField}
-                    value={this.state.username}
-                 />
-                 <Input
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                    onChange={this.updateField}
-                    value={this.state.password}
-                 />
-                 <Button onClick={this.handleSubmit}>Register</Button>
-            </Form>
+        const message = this.state.error !== "" ? this.state.error :  "";
+        const messageClass = message === "" ? "hidden": "" ;
+
+        if(this.state.status ) {
+            return <h2>You are logged in. Go check out some Dad Jokes!</h2>
+        } else {
+            return(
+                <div className="formWrapper">
+                    <h2 className={messageClass}>{message}</h2>
+                    <Form>
+                        <Input
+                            type="text"
+                            name="username"
+                            placeholder="username"
+                            onChange={this.updateField}
+                            value={this.state.username}
+                        />
+                        <Input
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                            onChange={this.updateField}
+                            value={this.state.password}
+                        />
+                        <Button onClick={this.handleSubmit}>Register</Button>
+                    </Form>
+                </div>
+            
         )
+        }
+        
     }
 }
 
