@@ -16,13 +16,16 @@ function register(req, res) {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 8);
   user.password = hash;
+  //console.log(user)
 
   Users.add(user)
   .then(user => {
-    res.status(201).json(user)
+      const token = generateToken(user);
+      res.status(201).json({user, token})
+      //console.log(user, token)
   })
   .catch(error => {
-    res.status(500).json(error)
+    res.status(500).json({message: "Router error: ",  error})
   })
 }
 
